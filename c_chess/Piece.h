@@ -14,13 +14,11 @@ public:
 			this->rightLeft = y;
 		}
 	};
-	// Arg of Piece()
+	// These section contains args of Piece()
 	string name;
-	// Arg of Piece()
 	int row, col;
-	// Arg of Piece()
 	bool isWhite;
-	// Define inside Piece()
+	// Define inside Pieces()
 	LinkedList<Move>moveSet;
 
 	// Move check includes (isInMoveSet, isInBoard, isInterrupted) inside.
@@ -28,7 +26,6 @@ public:
 	bool isInMoveSet(int, int);	
 	bool isInBoard(int, int);
 	virtual bool isInterrupted(int, int, LinkedList<LinkedList<Piece*>>);
-	void pieceMaker(string);
 	Piece(int, int, bool, string);
 	Piece();
 	~Piece();

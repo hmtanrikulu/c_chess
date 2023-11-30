@@ -6,8 +6,9 @@ Piece::Piece(int x, int y, bool z, string n) {
 	this->col = y;
 	this->isWhite = z;
 }
+
 Piece::Piece() {
-	this->name =nullptr;
+	this->name = "dummy";
 	this->row = NULL;
 	this->col = NULL;
 	this->moveSet = {};
@@ -116,8 +117,8 @@ bool Piece::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) 
 }
 	//PIECES STARTS HERE
 
-// Constructors
-King::King(int r1, int c1, bool isWhite) {
+// Constructors they include moveSet inserts !
+King::King(int r1, int c1, bool isWhite) : Piece (r1, c1,isWhite, "King") {
 	LinkedList<Move> moves;
 	moves.insert(Move(0, 1));
 	moves.insert(Move(0, -1));
@@ -133,17 +134,7 @@ King::King(int r1, int c1, bool isWhite) {
 	this->isMoved = false;
 }
 
-
-
-
-
-
-
-
-
-
-
-Queen::Queen(int r1, int c1, bool isWhite) {
+Queen::Queen(int r1, int c1, bool isWhite) : Piece(r1, c1, isWhite, "Queen") {
 	LinkedList<Move> moves;
 	for (int i = -8; i < 9; i++) {
 		for (int j = -8; j < 9; j++) {
@@ -155,7 +146,7 @@ Queen::Queen(int r1, int c1, bool isWhite) {
 		this->isWhite = isWhite;
 }
 
-Bishop::Bishop(int r1, int c1, bool isWhite) {
+Bishop::Bishop(int r1, int c1, bool isWhite) : Piece(r1, c1, isWhite, "Bishop") {
 	LinkedList<Move> moves;
 	for (int i = -8; i < 9; i++) {
 		int j = i;
@@ -170,7 +161,7 @@ Bishop::Bishop(int r1, int c1, bool isWhite) {
 	this->isWhite = isWhite;
 }
 
-Knight::Knight(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <LinkedList<Move>>()) {
+Knight::Knight(int r1, int c1, bool isWhite) : Piece(r1, c1, isWhite, "Knight") {
 	LinkedList<Move> moves;
 	moves.insert(Move(2, 1));
 	moves.insert(Move(1, 2));
@@ -185,7 +176,7 @@ Knight::Knight(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function 
 	this->isWhite = isWhite;
 }
 
-Rook::Rook(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <LinkedList<Move>>()) {
+Rook::Rook(int r1, int c1, bool isWhite) : Piece(r1, c1, isWhite, "Rook") {
 	LinkedList<Move> moves;
 	for (int i = -8; i < 9; i++) {
 		moves.insert(Move(i, 0));
@@ -197,13 +188,14 @@ Rook::Rook(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 	this->isMoved = false;
 }
 
-Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <LinkedList<Move>>()) {
+Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, isWhite, "Pawn") {
 	LinkedList<Move> moves;
 	moves.insert(Move(1, 0));
 	this->isMoved = false;
 }
-// MoveChecks
-	bool Queen::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+	
+	// MoveChecks
+bool Queen::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
 		else {
@@ -211,7 +203,8 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		}
 	}
 
-	bool King::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+	// dumbMove, isCastle methods are added
+bool King::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board) && dumbMove(r2, c2, board)) return true;
 		else if (isCastle(r2, c2) && isInterrupted(r2, c2, board) && isRookMoved(r2, c2, board)) return true;
@@ -220,7 +213,7 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		}
 	}
 
-	bool Knight::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+bool Knight::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
 		else {
@@ -228,7 +221,7 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		}
 	}
 
-	bool Bishop::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+bool Bishop::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
 		else {
@@ -236,7 +229,7 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		}
 	}
 
-	bool Rook::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+bool Rook::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
 
@@ -245,7 +238,8 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		}
 	}
 
-	bool Pawn::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+// crossMove, enPassant methods are added
+bool Pawn::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
 		else if (crossMove(r2, c2, board) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
@@ -255,7 +249,7 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		}
 	}
 
-	bool Pawn::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+bool Pawn::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (c2 == c1) {
 			if (board[r2][c2] != nullptr) return true;
@@ -263,9 +257,12 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		return false;
 	}
 	
+
+
+
 	// Special moves
 
-	bool King::isRookMoved(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+bool King::isRookMoved(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		(r2 == 0 && (c2 == 1 || c2 == 6)) || (r2 == 7 && (c2 == 1 || c2 == 6));
 		if (r2 == 0 && c2 == 1) {
 			if (board[0][0] != nullptr) {
@@ -321,13 +318,13 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		}
 	}
 
-	bool King::isCastle(int r2, int c2) {
+bool King::isCastle(int r2, int c2) {
 		if (this->isMoved == true) return false;
 		else if ((r2 == 0 && (c2 == 1 || c2 == 6)) || (r2 == 7 && (c2 == 1 || c2 == 6))) return true;
 		else return false;
 	}
 
-	bool Pawn::enPassant(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+bool Pawn::enPassant(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (((r2 - r1 == 2) || (r2 - r1 == -2)) && (c2 == c1) && (board[r2][c2] == nullptr)) {
 			return true;
@@ -335,7 +332,7 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		return false;
 	}
 
-	bool Pawn::crossMove(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
+bool Pawn::crossMove(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if ((r2 - r1 != 1 && this->isWhite) || (r2 - r1 != -1 && !this->isWhite)) return false;
 		if (abs(c2 - c1) != 1) return false;
@@ -344,70 +341,10 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, "Knight", function <Lin
 		return true;
 	}
 
-	void Pawn::convert(int r2, int c2, string convertTo, LinkedList <LinkedList <Piece*>> board) {
+void Pawn::convert(int r2, int c2, string convertTo, LinkedList <LinkedList <Piece*>> board) {
 		if (((this->isWhite == 1) && (r2 == 7)) || ((this->isWhite == 0) && (r2 == 0))) {
 			cout << "Type A The Piece You'd Like To Convert Your Pawn To";
 			cin >> convertTo;
 			delete this;
 		}
-	}
-	
-	bool Queen::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		int r1 = this->row, c1 = this->col;
-		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
-		else {
-			return false;
-		}
-	}
-
-	bool King::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		int r1 = this->row, c1 = this->col;
-		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board) && dumbMove(r2, c2, board)) return true;
-		else if (isCastle(r2, c2) && isInterrupted(r2, c2, board) && isRookMoved(r2, c2, board)) return true;
-		else {
-			return false;
-		}
-	}
-
-	bool Knight::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		int r1 = this->row, c1 = this->col;
-		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
-		else {
-			return false;
-		}
-	}
-
-	bool Bishop::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		int r1 = this->row, c1 = this->col;
-		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
-		else {
-			return false;
-		}
-	}
-
-	bool Rook::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		int r1 = this->row, c1 = this->col;
-		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
-
-		else {
-			return false;
-		}
-	}
-
-	bool Pawn::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		int r1 = this->row, c1 = this->col;
-		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
-		else if (crossMove(r2, c2, board) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
-		else if (enPassant(r2, c2, board) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
-		else {
-			return false;
-		}
-	}
-
-	bool Pawn::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		int r1 = this->row, c1 = this->col;
-		if (c2 == c1) {
-			if (board[r2][c2] != nullptr) return true;
-		}
-		return false;
 	}
