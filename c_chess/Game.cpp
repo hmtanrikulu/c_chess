@@ -22,6 +22,7 @@ Piece* Game::pieceMaker(int row, int col, string name, bool isWhite) {
 	}
 }
 
+// Contains turn, history and start positons
 Game::Game() {
 	this->isWhite = true;
 	this->history = {};
@@ -67,17 +68,27 @@ bool Game::move() {
 	string prompt;
 	int r1, c1, r2, c2;
 	cout << "Enter your move (e.g., 'a2 to a4'): ";
-	cin >> prompt; // 'a2 to a4'
+	// "a2 to a4" 
+	cin >> prompt;
 	for (int i = 0; i < prompt.length(); i++) {
 		tolower(prompt[i]);
 	}
+	// a- stoi() means a equals to 0 and b equals to 1 which converts to LinkedList
 	r1 = 'a' - stoi((prompt.substr(0, 1)));
 	c2 = stoi((prompt.substr(1, 1)));
 	r2 = 'a' - stoi((prompt.substr(6, 1)));
 	c2 = stoi((prompt.substr(7, 1)));
-	while (this->board[r1][c1] == nullptr) move();
+	//
+	while (this->board[r1][c1] == nullptr) {
+		cout << "wrong entry, try again!";
+		move();
+	}
+
+
+
+	//flag move functions defrence problem exists
 	if (this->board[r1][c1] != nullptr) {
-		this->board[r1][c1] // burda move nasýl yapýlacak amk !!!!!
+		this->board[r1][c1]->
 	}
 
 

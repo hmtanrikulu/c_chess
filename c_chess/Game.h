@@ -9,10 +9,11 @@ class Game {
 	// Actual Board
 	LinkedList<LinkedList<Piece*>> board;
 	LinkedList<string> history;
+	// Returns a pointer which will be used on board list
 	Piece* pieceMaker(int, int, string, bool);
 public:
 	bool move(); // a2 -> to 2,4
-	//bool castleAvailable();
+	// bool castleAvailable();
 	Game();
 	~Game();
 };

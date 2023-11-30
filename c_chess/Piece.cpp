@@ -115,7 +115,10 @@ bool Piece::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) 
 	}
 
 }
-	//PIECES STARTS HERE
+
+
+
+//	PIECES STARTS HERE
 
 // Constructors they include moveSet inserts !
 King::King(int r1, int c1, bool isWhite) : Piece (r1, c1,isWhite, "King") {
@@ -193,7 +196,9 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, isWhite, "Pawn") {
 	moves.insert(Move(1, 0));
 	this->isMoved = false;
 }
-	
+
+
+
 	// MoveChecks
 bool Queen::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
@@ -203,7 +208,6 @@ bool Queen::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		}
 	}
 
-	// dumbMove, isCastle methods are added
 bool King::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board) && dumbMove(r2, c2, board)) return true;
@@ -238,7 +242,10 @@ bool Rook::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		}
 	}
 
-// crossMove, enPassant methods are added
+
+
+// Special moves
+
 bool Pawn::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
@@ -257,11 +264,6 @@ bool Pawn::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		return false;
 	}
 	
-
-
-
-	// Special moves
-
 bool King::isRookMoved(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		(r2 == 0 && (c2 == 1 || c2 == 6)) || (r2 == 7 && (c2 == 1 || c2 == 6));
 		if (r2 == 0 && c2 == 1) {

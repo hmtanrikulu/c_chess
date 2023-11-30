@@ -31,10 +31,9 @@ public:
 	~Piece();
 };
 
-
 //PIECES START HERE
 
-
+// dumbMove missing;
 class King :public Piece {
 	bool isMoved;
 public:
@@ -80,8 +79,5 @@ public:
 	bool crossMove(int, int, LinkedList<LinkedList<Piece*>>);
 	bool enPassant(int, int, LinkedList<LinkedList<Piece*>>);
 };
-
-
-
 
 #endif
