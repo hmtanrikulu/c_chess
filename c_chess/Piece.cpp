@@ -116,11 +116,8 @@ bool Piece::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) 
 
 }
 
+// These constructors include moveSet inserts !
 
-
-//	PIECES STARTS HERE
-
-// Constructors they include moveSet inserts !
 King::King(int r1, int c1, bool isWhite) : Piece (r1, c1,isWhite, "King") {
 	LinkedList<Move> moves;
 	moves.insert(Move(0, 1));
@@ -197,9 +194,6 @@ Pawn::Pawn(int r1, int c1, bool isWhite) : Piece(r1, c1, isWhite, "Pawn") {
 	this->isMoved = false;
 }
 
-
-
-	// MoveChecks
 bool Queen::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		int r1 = this->row, c1 = this->col;
 		if (isInMoveSet(r2, c2) && isInBoard(r2, c2) && isInterrupted(r2, c2, board)) return true;
@@ -242,8 +236,6 @@ bool Rook::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 		}
 	}
 
-
-
 // Special moves
 
 bool Pawn::moveCheck(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
@@ -265,60 +257,59 @@ bool Pawn::isInterrupted(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
 	}
 	
 bool King::isRookMoved(int r2, int c2, LinkedList<LinkedList<Piece*>> board) {
-		(r2 == 0 && (c2 == 1 || c2 == 6)) || (r2 == 7 && (c2 == 1 || c2 == 6));
-		if (r2 == 0 && c2 == 1) {
-			if (board[0][0] != nullptr) {
-				try {
-					Rook* rook = (Rook*)board[0][0];
-					if (rook->isMoved) return false;
-				}
-				catch (exception e) {
-					return false;
-				}
-				return true;
+	if	((r2 == 0 && (c2 == 1 || c2 == 6)) || r2 == 7 && (c2 == 1 || c2 == 6)) {
+		if (board[0][0] != nullptr) {
+			try {
+				Rook* rook = (Rook*)board[0][0];
+				if (rook->isMoved) return false;
 			}
-			return false;
-		}
-		else if (r2 == 0 && c2 == 6) {
-			if (board[0][0] != nullptr) {
-				try {
-					Rook* rook = (Rook*)board[0][7];
-					if (rook->isMoved) return false;
-				}
-				catch (exception e) {
-					return false;
-				}
-				return true;
+			catch (exception e) {
+				return false;
 			}
-			return false;
+			return true;
 		}
-		else if (r2 == 7 && c2 == 1) {
-			if (board[7][0] != nullptr) {
-				try {
-					Rook* rook = (Rook*)board[7][0];
-					if (rook->isMoved) return false;
-				}
-				catch (exception e) {
-					return false;
-				}
-				return true;
-			}
-			return false;
-		}
-		else if (r2 == 7 && c2 == 6) {
-			if (board[7][7] != nullptr) {
-				try {
-					Rook* rook = (Rook*)board[7][7];
-					if (rook->isMoved) return false;
-				}
-				catch (exception e) {
-					return false;
-				}
-				return true;
-			}
-			return false;
-		}
+		return false;
 	}
+	else if (r2 == 0 && c2 == 6) {
+		if (board[0][0] != nullptr) {
+			try {
+				Rook* rook = (Rook*)board[0][7];
+				if (rook->isMoved) return false;
+			}
+			catch (exception e) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	else if (r2 == 7 && c2 == 1) {
+		if (board[7][0] != nullptr) {
+			try {
+				Rook* rook = (Rook*)board[7][0];
+				if (rook->isMoved) return false;
+			}
+			catch (exception e) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	else if (r2 == 7 && c2 == 6) {
+		if (board[7][7] != nullptr) {
+			try {
+				Rook* rook = (Rook*)board[7][7];
+				if (rook->isMoved) return false;
+			}
+			catch (exception e) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+}
 
 bool King::isCastle(int r2, int c2) {
 		if (this->isMoved == true) return false;

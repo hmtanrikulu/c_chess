@@ -11,8 +11,7 @@ class c2 :public c1{
 
 
 
-int main() {
-	LinkedList <c1*> list;
-	list.insert(new c2);
-	cout << list[0];
+board[0][0] = 2;
+board[2][0] = 5;
+cout << to_string(board[1][0]);
 }

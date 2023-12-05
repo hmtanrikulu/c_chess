@@ -1,4 +1,5 @@
 #include "LinkedList.h"
+#include <vector>
 #ifndef PIECE
 #define PIECE
 
@@ -14,33 +15,29 @@ public:
 			this->rightLeft = y;
 		}
 	};
-	// These section contains args of Piece()
 	string name;
 	int row, col;
 	bool isWhite;
-	// Define inside Pieces()
 	LinkedList<Move>moveSet;
 
-	// Move check includes (isInMoveSet, isInBoard, isInterrupted) inside.
+	// Move check includes (isInMoveSet, isInBoard, isInterrupted) inside it.
 	virtual bool moveCheck(int, int, LinkedList<LinkedList<Piece*>>) = 0;
 	bool isInMoveSet(int, int);	
 	bool isInBoard(int, int);
 	virtual bool isInterrupted(int, int, LinkedList<LinkedList<Piece*>>);
 	Piece(int, int, bool, string);
 	Piece();
-	~Piece();
+	//~Piece();
 };
 
-//PIECES START HERE
-
-// dumbMove missing;
+// dumbMove not complete;
 class King :public Piece {
 	bool isMoved;
 public:
 	King(int, int, bool);
 	bool isCastle(int, int);
 	bool moveCheck(int, int, LinkedList<LinkedList<Piece*>>) override;
-	bool dumbMove(int, int, LinkedList<LinkedList<Piece*>>);
+	//bool dumbMove(int, int, LinkedList<LinkedList<Piece*>>);
 	bool isRookMoved(int, int, LinkedList<LinkedList<Piece*>>);
 };
 
@@ -48,7 +45,7 @@ class Queen :public Piece {
 public:
 	Queen(int, int, bool);
 	bool moveCheck(int, int, LinkedList<LinkedList<Piece*>>) override;
-};
+}; 
 
 class Rook :public Piece {
 public:

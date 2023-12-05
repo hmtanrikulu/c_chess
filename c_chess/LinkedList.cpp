@@ -6,6 +6,12 @@ int LinkedList<T>::size() {
 }
 
 template <typename T>
+T LinkedList<T>::get(int x) {
+	Node<T>* iterator = this->head;
+	int count;	
+}
+
+template <typename T>
 void LinkedList<T>::insert(T x) {
 	Node<T>* newElement = new Node<T>(x);
 	if (this->head == nullptr) {
